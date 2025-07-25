@@ -35,17 +35,20 @@ function App() {
   };
 
   const handleUpdateQuestion = (id, newCorrectIndex) => {
+    setQuestions(questions.map(q => 
+      q.id === id ? {...q, correctIndex: newCorrectIndex} : q
+    ));
+    
+    
     fetch(`http://localhost:4000/questions/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ correctIndex: newCorrectIndex }),
-    })
-      .then((r) => r.json())
-      .then((updatedQuestion) => {
-        setQuestions(questions.map((q) => 
-          q.id === updatedQuestion.id ? updatedQuestion : q
-        ));
-      });
+    }).catch(error => {
+      console.error("Error updating question:", error);
+      
+      setQuestions(questions);
+    });
   };
 
   return (

@@ -6,7 +6,7 @@ function QuestionItem({ question, onDeleteQuestion, onUpdateQuestion }) {
   const handleDelete = () => onDeleteQuestion(id);
 
   const handleAnswerChange = (e) => {
-    const newCorrectIndex = parseInt(e.target.value);
+    const newCorrectIndex = parseInt(e.target.value, 10); // Ensure base 10 parsing
     onUpdateQuestion(id, newCorrectIndex);
   };
 
@@ -19,6 +19,7 @@ function QuestionItem({ question, onDeleteQuestion, onUpdateQuestion }) {
         <select 
           value={correctIndex}
           onChange={handleAnswerChange}
+          data-testid="correct-answer-dropdown" // Added for easier testing
         >
           {answers.map((answer, index) => (
             <option key={index} value={index}>
